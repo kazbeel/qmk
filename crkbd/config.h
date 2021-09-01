@@ -72,10 +72,6 @@
 #  endif // RGB_MATRIX_KEYPRESSES
 #endif // RGB_MATRIX_ENABLE
 
-// #ifdef OLED_DRIVER_ENABLE
-// #  define OLED_DISABLE_TIMEOUT
-// #endif // OLED_DRIVER_ENABLE
-
 /**
  * Disable unused features to save ROM space
  * See: https://docs.qmk.fm/#/faq_keymap?id=mechanical-lock-switch-support
