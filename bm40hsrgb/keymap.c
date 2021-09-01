@@ -1,221 +1,161 @@
 #include QMK_KEYBOARD_H
+
 #include "keymap_spanish.h"
 
-#define KC_MAC_UNDO LGUI(KC_Z)
-#define KC_MAC_CUT LGUI(KC_X)
-#define KC_MAC_COPY LGUI(KC_C)
-#define KC_MAC_PASTE LGUI(KC_V)
-#define KC_PC_UNDO LCTL(KC_Z)
-#define KC_PC_CUT LCTL(KC_X)
-#define KC_PC_COPY LCTL(KC_C)
-#define KC_PC_PASTE LCTL(KC_V)
-#define ES_LESS_MAC KC_GRAVE
-#define ES_GRTR_MAC LSFT(KC_GRAVE)
-#define ES_BSLS_MAC ALGR(KC_6)
-#define NO_PIPE_ALT KC_GRAVE
-#define NO_BSLS_ALT KC_EQUAL
-#define LSA_T(kc) MT(MOD_LSFT | MOD_LALT, kc)
-#define BP_NDSH_MAC ALGR(KC_8)
+// Mod-Tap shortcuts
+#define CT(kc) LCTL_T(kc)
+#define ST(kc) LSFT_T(kc)
+#define AT(kc) LALT_T(kc)
+#define GT(kc) LGUI_T(kc)
 
-enum planck_keycodes {
-  ES_LSPO,
-  ES_RSPC,
+#define U_UND   LGUI(KC_Z)
+#define U_RDO   SGUI(KC_Z)
+#define U_CUT   LGUI(KC_X)
+#define U_CPY   LGUI(KC_C)
+#define U_PST   LGUI(KC_V)
+
+// Multifunction layer toggle and simple keycode
+#define SYM_ENT  LT(SYMS, KC_ENT)
+#define NAV_TAB  LT(NAV, KC_TAB)
+
+// MacOS control
+#define QUAKE_CONSOLE    LCTL(LSFT(ES_NTIL))   // Show/Hide quake console
+#define LOCK_SCREEN      LCTL(LGUI(KC_Q))      // Lock current user session
+#define SUSPEND          LALT(LGUI(KC_POWER))  // Suspend computer
+#define SCREENSHOT       LSFT(LGUI(KC_5))      // Open screenshot app
+#define MISSION_CONTROL  LCTL(KC_UP)
+#define APP_WINS         LCTL(KC_DOWN)
+#define PRV_DSK          LCTL(KC_LEFT)
+#define NXT_DSK          LCTL(KC_RIGHT)
+#define SPOTLIGHT        LGUI(KC_SPC)
+
+enum custom_keycodes {
+  APP_CYCLING = SAFE_RANGE,
 };
 
-enum tap_dance_codes {
-  DANCE_0,
-  DANCE_1,
-  DANCE_2
+enum layers {
+  BASE,
+  NAV,
+  NUMPAD,
+  SYMS,
+  MEDIA,
+  FUNC,
 };
 
-enum planck_layers {
-  _BASE,
-  _LOWER,
-  _RAISE,
-  _ADJUST,
-  _LAYER4
-};
-
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
+  /* [LAYER_NAME] = LAYOUT_planck_mit( */
+  /*   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, */
+  /*   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, */
+  /*   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, */
+  /*   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX */
+  /* ), */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BASE] = LAYOUT_planck_mit(
-    KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,         KC_BSPACE,
-    TD(DANCE_0),    KC_A,           KC_S,           KC_D,           TD(DANCE_2),           KC_G,           KC_H,           KC_J,           KC_K,           KC_L,           ES_NTIL,      ES_ACUT,
-    KC_LSHIFT,      KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         ES_MINS,      KC_ENTER,
-    TD(DANCE_1),          KC_LCTRL,       KC_LALT,        KC_LGUI,        LOWER,          KC_SPACE,       RAISE,          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT
+  [BASE] = LAYOUT_planck_mit(
+    KC_LALT,     KC_Q,     KC_W,      KC_E,        KC_R,     KC_T,     KC_Y,     KC_U,      KC_I,      KC_O,      KC_P,     KC_BSPACE,
+    CT(KC_ESC),  KC_A,     KC_S,      KC_D,        KC_F,     KC_G,     KC_H,     KC_J,      KC_K,      KC_L,      ES_NTIL,  ES_ACUT,
+    KC_LSFT,     KC_Z,     KC_X,      KC_C,        KC_V,     KC_B,     KC_N,     KC_M,      KC_COMMA,  KC_DOT,    ES_MINS,  XXXXXXX,
+    XXXXXXX,     XXXXXXX,  KC_LGUI,   MO(NUMPAD),  NAV_TAB,  KC_SPC,             SYM_ENT,   MO(FUNC),  XXXXXXX,   XXXXXXX,  XXXXXXX
   ),
 
-  [_LOWER] = LAYOUT_planck_mit(
-    KC_TRANSPARENT, KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_HOME,        KC_PGUP,        KC_7,           KC_8,           KC_9,           KC_KP_ASTERISK, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_F5,          KC_F6,          KC_F7,          KC_F8,          KC_END,         KC_PGDOWN,      KC_4,           KC_5,           KC_6,           KC_KP_PLUS,     KC_KP_SLASH,
-    KC_TRANSPARENT, KC_F9,          KC_F10,          KC_F11,          KC_F12,         KC_TRANSPARENT, KC_TRANSPARENT, KC_1,           KC_2,           KC_3,           KC_KP_MINUS,    KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,          KC_RGUI,        KC_0,          KC_DOT,       KC_KP_EQUAL,    KC_TRANSPARENT
+  [NAV] = LAYOUT_planck_mit(
+    _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,        XXXXXXX,  XXXXXXX,  XXXXXXX,    XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
+    _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  QUAKE_CONSOLE,  XXXXXXX,  KC_LEFT,  KC_DOWN,    KC_UP,    KC_RIGHT,  XXXXXXX,  XXXXXXX,
+    _______,  U_UND,    U_CUT,    U_CPY,    U_PST,          U_RDO,    KC_HOME,  KC_PGDOWN,  KC_PGUP,  KC_END,    XXXXXXX,  XXXXXXX,
+    XXXXXXX,  XXXXXXX,  _______,  XXXXXXX,  _______,        _______,            XXXXXXX,    XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX
   ),
 
-  [_RAISE] = LAYOUT_planck_mit(
-    ES_CIRC,        ES_PIPE,        ES_AT,          KC_PERC,        KC_DLR,         KC_HOME,        KC_PGUP,        ES_LBRC,        ES_RBRC,        ES_IQUE,        ES_QUES,        KC_DELETE,
-    LALT(ES_NTIL),  ES_AMPR,        ES_HASH,        ES_BSLS,        ES_SLSH,        KC_END,         KC_PGDOWN,      ES_LPRN,        ES_RPRN,        ES_EQL,         ES_PLUS,        ES_ASTR,
-    KC_TRANSPARENT, ES_LESS,        ES_GRTR,        ES_DQUO,        ES_APOS,        ES_GRV, KC_TRANSPARENT, ES_LCBR,        ES_RCBR,        ES_IEXL,        KC_EXLM,        KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, LALT(KC_E)
+  [NUMPAD] = LAYOUT_planck_mit(
+    _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_PERC,  KC_7,     KC_8,    KC_9,    KC_PSLS,  KC_BSPACE,
+    _______,  XXXXXXX,  XXXXXXX,  KC_LGUI,  XXXXXXX,  XXXXXXX,  ES_LPRN,  KC_4,     KC_5,    KC_6,    KC_PPLS,  KC_PAST,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  ES_RPRN,  KC_1,     KC_2,    KC_3,    KC_PMNS,  ES_EQL,
+    XXXXXXX,  XXXXXXX,  _______,  _______,  XXXXXXX,  _______,            XXXXXXX,  KC_0,    KC_DOT,  XXXXXXX,  XXXXXXX
   ),
 
-  [_ADJUST] = LAYOUT_planck_mit(
-    RESET, KC_NO, KC_NO, RGB_TOG, RGB_MOD, RGB_VAD, RGB_VAI, KC_NO,               KC_NO,               KC_NO,               KC_NO, KC_NO,
-    KC_NO, KC_NO, KC_NO, LALT(LGUI(KC_POWER)), LCTL(LGUI(KC_Q)),   KC_NO,   KC_NO,   KC_AUDIO_VOL_DOWN,   KC_AUDIO_MUTE,       KC_AUDIO_VOL_UP,     KC_NO, KC_NO,
-    KC_NO, KC_NO, KC_NO, KC_NO,   LSFT(LGUI(KC_5)),   KC_NO,   KC_NO,   KC_MEDIA_PREV_TRACK, KC_MEDIA_PLAY_PAUSE, KC_MEDIA_NEXT_TRACK, KC_NO, KC_NO,
-    KC_NO, KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,            KC_NO,               KC_NO,               KC_NO,               KC_NO, KC_NO
+  [SYMS] = LAYOUT_planck_mit(
+    ES_CIRC,        ES_PIPE,  ES_AT,    KC_PERC,  KC_DLR,     XXXXXXX,  XXXXXXX,  ES_LBRC,  ES_RBRC,  ES_IQUE,  ES_QUES,  KC_DELETE,
+    LALT(ES_NTIL),  ES_AMPR,  ES_HASH,  ES_BSLS,  ES_SLSH,    XXXXXXX,  XXXXXXX,  ES_LPRN,  ES_RPRN,  ES_EQL,   ES_PLUS,  ES_ASTR,
+    XXXXXXX,        ES_LESS,  ES_GRTR,  ES_DQUO,  ES_APOS,    ES_GRV,   XXXXXXX,  ES_LCBR,  ES_RCBR,  ES_IEXL,  KC_EXLM,  XXXXXXX,
+    XXXXXXX,        XXXXXXX,  XXXXXXX,  XXXXXXX,  MO(MEDIA),  XXXXXXX,            _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX
   ),
 
-  [_LAYER4] = LAYOUT_planck_mit(
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
+  [MEDIA] = LAYOUT_planck_mit(
+    RESET,    XXXXXXX,  RGB_TOG,  RGB_MOD,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_VOLD,  KC_MUTE,  KC_VOLU,  XXXXXXX,  XXXXXXX,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MPRV,  KC_MPLY,  KC_MNXT,  XXXXXXX,  XXXXXXX,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  _______,  XXXXXXX,            _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX
+  ),
+
+  [FUNC] = LAYOUT_planck_mit(
+    XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,  XXXXXXX,  XXXXXXX,     SPOTLIGHT,        APP_CYCLING,  LOCK_SCREEN,  XXXXXXX,
+    XXXXXXX,  KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,  PRV_DSK,  APP_WINS,    MISSION_CONTROL,  NXT_DSK,      SUSPEND,      XXXXXXX,
+    XXXXXXX,  KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,  XXXXXXX,  SCREENSHOT,  XXXXXXX,          XXXXXXX,      XXXXXXX,      XXXXXXX,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,            XXXXXXX,     _______,          XXXXXXX,      XXXXXXX,      XXXXXXX
   ),
 };
 
+/**
+ * APP CYCLING
+ */
+bool is_app_cycling_active = false;
+uint16_t app_cycling_timer = 0;
+
+void app_cycling_activate(void) {
+  if (!is_app_cycling_active) {
+    is_app_cycling_active = true;
+    register_code(KC_LGUI);
+  }
+
+  app_cycling_timer = timer_read();
+}
+
+void app_cycling_deactivate(void) {
+  if (is_app_cycling_active) {
+    if (timer_elapsed(app_cycling_timer) > 1000) {
+      unregister_code(KC_LGUI);
+      is_app_cycling_active = false;
+    }
+  }
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case ES_LSPO:
-      perform_space_cadet(record, keycode, KC_LSFT, KC_LSFT, KC_8);
-      return false;
-    case ES_RSPC:
-      perform_space_cadet(record, keycode, KC_LSFT, KC_LSFT, KC_9);
-      return false;
+    case APP_CYCLING:
+      if (record->event.pressed) {
+        app_cycling_activate();
+        register_code(KC_TAB);
+      } else {
+        unregister_code(KC_TAB);
+      }
+      break;
   }
+
   return true;
 }
 
-uint32_t layer_state_set_user(uint32_t state) {
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+void matrix_scan_user(void) {
+  app_cycling_deactivate();
 }
 
-typedef struct {
-    bool is_press_action;
-    uint8_t step;
-} tap;
-
-enum {
-    SINGLE_TAP = 1,
-    SINGLE_HOLD,
-    DOUBLE_TAP,
-    DOUBLE_HOLD,
-    DOUBLE_SINGLE_TAP,
-    MORE_TAPS
-};
-
-static tap dance_state[3];
-
-uint8_t dance_step(qk_tap_dance_state_t *state);
-
-uint8_t dance_step(qk_tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (state->interrupted || !state->pressed) return SINGLE_TAP;
-        else return SINGLE_HOLD;
-    } else if (state->count == 2) {
-        if (state->interrupted) return DOUBLE_SINGLE_TAP;
-        else if (state->pressed) return DOUBLE_HOLD;
-        else return DOUBLE_TAP;
-    }
-    return MORE_TAPS;
+/**
+ * Define tapping term per key.
+ */
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case SYM_ENT:
+    case NAV_TAB:
+      return 50;
+    default:
+      return TAPPING_TERM;
+  }
 }
 
+/* ************************************************************************************ */
+/* INITIALIZATION                                                                       */
+/* ************************************************************************************ */
 
-void on_dance_0(qk_tap_dance_state_t *state, void *user_data);
-void dance_0_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_0_reset(qk_tap_dance_state_t *state, void *user_data);
+/* void keyboard_post_init_user(void) { */
+/*   // Set default underglow color */
+/*   rgblight_enable_noeeprom();   // Enable RGB without saving settings */
+/*   rgblight_sethsv_noeeprom(HSV_AZURE);  // Set default color */
+/* } */
 
-void on_dance_0(qk_tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(KC_ESCAPE);
-        tap_code16(KC_ESCAPE);
-        tap_code16(KC_ESCAPE);
-    }
-    if(state->count > 3) {
-        tap_code16(KC_ESCAPE);
-    }
-}
-
-void dance_0_finished(qk_tap_dance_state_t *state, void *user_data) {
-    dance_state[0].step = dance_step(state);
-    switch (dance_state[0].step) {
-        case SINGLE_TAP: register_code16(KC_ESCAPE); break;
-        case SINGLE_HOLD: register_code16(KC_LCTRL); break;
-        case DOUBLE_TAP: register_code16(KC_ESCAPE); register_code16(KC_ESCAPE); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(KC_ESCAPE); register_code16(KC_ESCAPE);
-    }
-}
-
-void dance_0_reset(qk_tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state[0].step) {
-        case SINGLE_TAP: unregister_code16(KC_ESCAPE); break;
-        case SINGLE_HOLD: unregister_code16(KC_LCTRL); break;
-        case DOUBLE_TAP: unregister_code16(KC_ESCAPE); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(KC_ESCAPE); break;
-    }
-    dance_state[0].step = 0;
-}
-
-void dance_1_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_1_reset(qk_tap_dance_state_t *state, void *user_data);
-
-void dance_1_finished(qk_tap_dance_state_t *state, void *user_data) {
-    dance_state[1].step = dance_step(state);
-    switch (dance_state[1].step) {
-        case SINGLE_HOLD: register_code16(LCTL(LSFT(ES_NTIL))); break;
-    }
-}
-
-void dance_1_reset(qk_tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state[1].step) {
-        case SINGLE_HOLD: unregister_code16(LCTL(LSFT(ES_NTIL))); break;
-    }
-    dance_state[1].step = 0;
-}
-
-void on_dance_2(qk_tap_dance_state_t *state, void *user_data);
-void dance_2_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_2_reset(qk_tap_dance_state_t *state, void *user_data);
-
-void on_dance_2(qk_tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(KC_F);
-        tap_code16(KC_F);
-        tap_code16(KC_F);
-    }
-    if(state->count > 3) {
-        tap_code16(KC_F);
-    }
-}
-
-void dance_2_finished(qk_tap_dance_state_t *state, void *user_data) {
-    dance_state[2].step = dance_step(state);
-    switch (dance_state[2].step) {
-        case SINGLE_TAP: register_code16(KC_F); break;
-        case SINGLE_HOLD: layer_on(4); break;
-        case DOUBLE_TAP: register_code16(KC_F); register_code16(KC_F); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(KC_F); register_code16(KC_F);
-    }
-}
-
-void dance_2_reset(qk_tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state[2].step) {
-        case SINGLE_TAP: unregister_code16(KC_F); break;
-        case SINGLE_HOLD: layer_off(4); break;
-        case DOUBLE_TAP: unregister_code16(KC_F); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(KC_F); break;
-    }
-    dance_state[2].step = 0;
-}
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-        [DANCE_0] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_0, dance_0_finished, dance_0_reset),
-        [DANCE_1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_1_finished, dance_1_reset),
-        [DANCE_2] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_2, dance_2_finished, dance_2_reset)
-};
