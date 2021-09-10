@@ -173,8 +173,10 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return rotation;
   }
 }
+
 void render_layer_state(void) {
   oled_write_P(PSTR("Layr:"), false);
+
   switch (biton32(layer_state)) {
     case BASE:
       oled_write_P(PSTR(" DFLT"), false);
@@ -232,3 +234,4 @@ void oled_task_user(void) {
 }
 
 #endif // OLED_DRIVER_ENABLE
+

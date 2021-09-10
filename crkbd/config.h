@@ -73,6 +73,13 @@
 #endif // RGB_MATRIX_ENABLE
 
 /**
+ * OLED configuration.
+ */
+#define OLED_TIMEOUT 30000
+#define OLED_BRIGHTNESS 128
+#define OLED_UPDATE_INTERVAL 5
+
+/**
  * Disable unused features to save ROM space
  * See: https://docs.qmk.fm/#/faq_keymap?id=mechanical-lock-switch-support
  */
