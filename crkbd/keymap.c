@@ -20,8 +20,8 @@ static const char PROGMEM crkbd_logo[] = {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x
 #define U_PST   LGUI(KC_V)
 
 // Multifunction layer toggle and simple keycode
-#define SYM_ENT         LT(SYMS, KC_ENT)
-#define NAV_TAB         LT(NAV, KC_TAB)
+#define NAV_TAB   LT(NAV, KC_TAB)
+#define NUM_ENT   LT(NUM, KC_ENT)
 
 // MacOS control
 #define CONSOLE           LCTL(LSFT(ES_NTIL))   // Show/Hide quake console (only Mac)
@@ -41,42 +41,35 @@ enum custom_keycodes {
 enum layers {
   BASE,
   NAV,
-  NUMPAD,
-  SYMS,
+  NUM,
+  SYM,
   MEDIA,
   FUNC,
 };
-
-  /* [LAYER_NAME] = LAYOUT_planck_mit( */
-  /*   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, */
-  /*   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, */
-  /*   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, */
-  /*   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX */
-  /* ), */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT(
     KC_LALT,     KC_Q,  KC_W,  KC_E,  KC_R,     KC_T,                          KC_Y,     KC_U,     KC_I,      KC_O,    KC_P,     KC_BSPACE,
     CT(KC_ESC),  KC_A,  KC_S,  KC_D,  KC_F,     KC_G,                          KC_H,     KC_J,     KC_K,      KC_L,    ES_NTIL,  ES_ACUT,
-    KC_LSFT,     KC_Z,  KC_X,  KC_C,  KC_V,     KC_B,                          KC_N,     KC_M,     KC_COMMA,  KC_DOT,  ES_MINS,  XXXXXXX,
-                                      KC_LGUI,  NAV_TAB,  MO(NUMPAD),  KC_SPC, SYM_ENT,  MO(FUNC)
+    KC_LSFT,     KC_Z,  KC_X,  KC_C,  KC_V,     KC_B,                          KC_N,     KC_M,     KC_COMMA,  KC_DOT,  ES_MINS,  KC_LGUI,
+                                      KC_LGUI,  NAV_TAB,  NUM_ENT,     KC_SPC, MO(SYM),  MO(FUNC)
   ),
 
   [NAV] = LAYOUT(
     _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                      XXXXXXX,  XXXXXXX,    XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
     _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  CONSOLE,  XXXXXXX,                      KC_LEFT,  KC_DOWN,    KC_UP,    KC_RIGHT,  XXXXXXX,  XXXXXXX,
-    _______,  U_UND,    U_CUT,    U_CPY,    U_PST,    U_RDO,                        KC_HOME,  KC_PGDOWN,  KC_PGUP,  KC_END,    XXXXXXX,  XXXXXXX,
+    _______,  U_UND,    U_CUT,    U_CPY,    U_PST,    U_RDO,                        KC_HOME,  KC_PGDOWN,  KC_PGUP,  KC_END,    XXXXXXX,  _______,
                                             _______,  _______,  XXXXXXX,  _______,  XXXXXXX,  XXXXXXX
   ),
 
-  [NUMPAD] = LAYOUT(
+  [NUM] = LAYOUT(
     _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                      KC_PERC,  KC_7,  KC_8,  KC_9,  KC_PSLS,  KC_BSPACE,
     _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                      ES_LPRN,  KC_4,  KC_5,  KC_6,  KC_PPLS,  KC_PAST,
     _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                      ES_RPRN,  KC_1,  KC_2,  KC_3,  KC_PMNS,  ES_EQL,
                                             _______,  XXXXXXX,  _______,  _______,  KC_0, KC_DOT
   ),
 
-  [SYMS] = LAYOUT(
+  [SYM] = LAYOUT(
     ES_CIRC,        ES_PIPE,  ES_AT,    KC_PERC,  KC_DLR,     XXXXXXX,                      XXXXXXX,  ES_LBRC,  ES_RBRC,  ES_IQUE,  ES_QUES,  KC_DELETE,
     LALT(ES_NTIL),  ES_AMPR,  ES_HASH,  ES_BSLS,  ES_SLSH,    XXXXXXX,                      XXXXXXX,  ES_LPRN,  ES_RPRN,  ES_EQL,   ES_PLUS,  ES_ASTR,
     XXXXXXX,        ES_LESS,  ES_GRTR,  ES_DQUO,  ES_APOS,    ES_GRV,                       XXXXXXX,  ES_LCBR,  ES_RCBR,  ES_IEXL,  KC_EXLM,  XXXXXXX,
@@ -91,10 +84,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [FUNC] = LAYOUT(
-    XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,                     XXXXXXX,  XXXXXXX,     SPOTLIGHT,        APP_CYCLING,  LOCK_SCREEN,  XXXXXXX,
-    XXXXXXX,  KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,                     PRV_DSK,  APP_WINS,    MISSION_CONTROL,  NXT_DSK,      SUSPEND,      XXXXXXX,
-    XXXXXXX,  KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,                     XXXXXXX,  SCREENSHOT,  XXXXXXX,          XXXXXXX,      XXXXXXX,      XXXXXXX,
-                                            XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,  _______
+    _______,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,                     XXXXXXX,  XXXXXXX,     SPOTLIGHT,        APP_CYCLING,  LOCK_SCREEN,  XXXXXXX,
+    _______,  KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,                     PRV_DSK,  APP_WINS,    MISSION_CONTROL,  NXT_DSK,      SUSPEND,      XXXXXXX,
+    _______,  KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,                     XXXXXXX,  SCREENSHOT,  XXXXXXX,          XXXXXXX,      XXXXXXX,      _______,
+                                            _______,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,  _______
   ),
 };
 
@@ -146,23 +139,12 @@ void matrix_scan_user(void) {
  */
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case SYM_ENT:
     case NAV_TAB:
-      return 50;
+      return 100;
     default:
       return TAPPING_TERM;
   }
 }
-
-/* ************************************************************************************ */
-/* INITIALIZATION                                                                       */
-/* ************************************************************************************ */
-
-/* void keyboard_post_init_user(void) { */
-/*   // Set default underglow color */
-/*   rgblight_enable_noeeprom();   // Enable RGB without saving settings */
-/*   rgblight_sethsv_noeeprom(HSV_AZURE);  // Set default color */
-/* } */
 
 #ifdef OLED_DRIVER_ENABLE
 
@@ -184,11 +166,11 @@ void render_layer_state(void) {
     case NAV:
       oled_write_P(PSTR("  NAV"), false);
       break;
-    case NUMPAD:
+    case NUM:
       oled_write_P(PSTR("  NUM"), false);
       break;
-    case SYMS:
-      oled_write_P(PSTR(" SYMS"), false);
+    case SYM:
+      oled_write_P(PSTR("  SYM"), false);
       break;
     case MEDIA:
       oled_write_P(PSTR("MEDIA"), false);
