@@ -5,15 +5,10 @@
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
 
-#define PERMISSIVE_HOLD
+// #define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
 
-/**
- * Use this to allow LOWER and RAISE keys to perform single-tap even after the
- * TAPPING_TERM when no secondary key is pressed. This is because the TAPPING_TERM for
- * these keys is very low.
- */
-// #define RETRO_TAPPING
+#define RETRO_TAPPING_PER_KEY
 
 #ifdef RGB_MATRIX_ENABLE
 #  define RGB_DISABLE_WHEN_USB_SUSPENDED false // turn off effects when suspended
