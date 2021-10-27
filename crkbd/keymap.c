@@ -76,9 +76,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [SYM] = LAYOUT(
-    ES_CIRC,        ES_PIPE,  ES_AT,    KC_PERC,  KC_DLR,     XXXXXXX,                      XXXXXXX,  ES_LBRC,  ES_RBRC,  ES_IQUE,  ES_QUES,  KC_DELETE,
-    LALT(ES_NTIL),  ES_AMPR,  ES_HASH,  ES_BSLS,  ES_SLSH,    XXXXXXX,                      XXXXXXX,  ES_LPRN,  ES_RPRN,  ES_EQL,   ES_PLUS,  ES_ASTR,
-    XXXXXXX,        ES_LESS,  ES_GRTR,  ES_DQUO,  ES_APOS,    ES_GRV,                       XXXXXXX,  ES_LCBR,  ES_RCBR,  ES_IEXL,  KC_EXLM,  XXXXXXX,
+    ES_CIRC,  ES_PIPE,  ES_AT,    KC_PERC,  KC_DLR,     XXXXXXX,                      XXXXXXX,  ES_LBRC,  ES_RBRC,  ES_IQUE,  ES_QUES,  KC_DELETE,
+    ES_TILD,  ES_AMPR,  ES_HASH,  ES_BSLS,  ES_SLSH,    XXXXXXX,                      XXXXXXX,  ES_LPRN,  ES_RPRN,  ES_EQL,   ES_PLUS,  ES_ASTR,
+    XXXXXXX,  ES_LESS,  ES_GRTR,  ES_DQUO,  ES_APOS,    ES_GRV,                       XXXXXXX,  ES_LCBR,  ES_RCBR,  ES_IEXL,  KC_EXLM,  XXXXXXX,
                                                   XXXXXXX,  MO(MEDIA),  XXXXXXX,  _______,  XXXXXXX,  XXXXXXX
   ),
 
