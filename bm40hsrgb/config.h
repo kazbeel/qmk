@@ -1,19 +1,18 @@
 #pragma once
 
-#define TAPPING_TERM 200
+#define MASTER_LEFT
+
+#define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
 
-// #define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
 
-/**
- * Use this to allow LOWER and RAISE keys to perform single-tap even after the
- * TAPPING_TERM when no secondary key es pressed. This is because the TAPPING_TERM for
- * these keys is very slow.
- */
-#define RETRO_TAPPING
+#define RETRO_TAPPING_PER_KEY
 
 #ifdef RGB_MATRIX_ENABLE
+// #  define RGB_DISABLE_WHEN_USB_SUSPENDED false // turn off effects when suspended
+#  define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120    // limits maximum brightness of LEDs to 200 out of 255. If not defined maximum brightness is set to 255
 #  define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_TYPING_HEATMAP
 
 #  define RGB_MATRIX_FRAMEBUFFER_EFFECTS      // For the heatmap effect
@@ -69,7 +68,14 @@
 #endif // RGB_MATRIX_ENABLE
 
 /**
- * Disable unsued features to save ROM space
+ * OLED configuration.
+ */
+// #define OLED_TIMEOUT 30000
+// #define OLED_BRIGHTNESS 128
+// #define OLED_UPDATE_INTERVAL 5
+
+/**
+ * Disable unused features to save ROM space
  * See: https://docs.qmk.fm/#/faq_keymap?id=mechanical-lock-switch-support
  */
 #ifdef LOCKING_SUPPORT_ENABLE
