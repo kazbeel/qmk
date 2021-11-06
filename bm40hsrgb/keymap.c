@@ -74,6 +74,7 @@ enum custom_keycodes {
 
 enum layers {
   BASE,
+  GAMING,
   NAV,
   NUM,
   SYM,
@@ -94,6 +95,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,   A_CTL,    S_ALT,    D_GUI,    F_SFT,    KC_G,    KC_H,  J_SFT,    K_GUI,     L_ALT,    NTIL_CTL,  ES_ACUT,
     KC_LSFT,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,    KC_N,  KC_M,     KC_COMMA,  KC_DOT,   ES_MINS,   KC_ENT,
     CONSOLE,  XXXXXXX,  WIN,      MO(NUM),  NAV_TAB,  KC_SPC,         MO(SYM),  MO(FUNC),  XXXXXXX,  XXXXXXX,   XXXXXXX
+  ),
+
+  [GAMING] = LAYOUT_planck_mit(
+    KC_ESC,   KC_Q,  KC_W,    KC_E,     KC_R,     KC_T,    KC_Y,  KC_U,     KC_I,      KC_O,     KC_P,      KC_BSPACE,
+    KC_TAB,   KC_A,  KC_S,    KC_D,     KC_F,     KC_G,    KC_H,  KC_J,     KC_K,      KC_L,     ES_NTIL,   ES_ACUT,
+    KC_LSFT,  KC_Z,  KC_X,    KC_C,     KC_V,     KC_B,    KC_N,  KC_M,     KC_COMMA,  KC_DOT,   ES_MINS,   KC_ENT,
+    KC_LCTL,  WIN,   KC_LALT, MO(NUM),  NAV_TAB,  KC_SPC,         MO(SYM),  MO(FUNC),  XXXXXXX,  XXXXXXX,   XXXXXXX
   ),
 
   [NAV] = LAYOUT_planck_mit(
@@ -118,14 +126,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [MEDIA] = LAYOUT_planck_mit(
-    RESET,    XXXXXXX,  RGB_TOG,  RGB_MOD,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MPRV,  KC_MPLY,  KC_MNXT,  XXXXXXX,  XXXXXXX,
-    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_VOLD,  KC_MUTE,  KC_VOLU,  XXXXXXX,  XXXXXXX,
-    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  _______,  XXXXXXX,            _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX
+    RESET,    XXXXXXX,  RGB_TOG,  RGB_MOD,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  TG(GAMING),  XXXXXXX,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MPRV,  KC_MPLY,  KC_MNXT,  XXXXXXX,     XXXXXXX,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_VOLD,  KC_MUTE,  KC_VOLU,  XXXXXXX,     XXXXXXX,
+    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  _______,  XXXXXXX,            _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,     XXXXXXX
   ),
 
   [FUNC] = LAYOUT_planck_mit(
-    XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,  XXXXXXX,  XXXXXXX,     SEARCH,          XXXXXXX,  LOCK_SCREEN,  XXXXXXX,
+    XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,  XXXXXXX,  XXXXXXX,     SEARCH,           XXXXXXX,  LOCK_SCREEN,  XXXXXXX,
     XXXXXXX,  KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,  PRV_DSK,  APP_WINS,    MISSION_CONTROL,  NXT_DSK,  SUSPEND,      XXXXXXX,
     XXXXXXX,  KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,  XXXXXXX,  SCREENSHOT,  XXXXXXX,          XXXXXXX,  XXXXXXX,      XXXXXXX,
     XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,            XXXXXXX,     _______,          XXXXXXX,  XXXXXXX,      XXXXXXX
@@ -204,6 +212,18 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     default:
       return false;
   }
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+  uint8_t layer = biton32(state);
+
+  if (layer == GAMING) {
+    rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+  } else {
+    rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
+  }
+
+  return state;
 }
 
 #ifdef OLED_DRIVER_ENABLE
