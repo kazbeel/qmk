@@ -2,6 +2,9 @@
 
 #include "keymap_spanish.h"
 
+#include "os_keycodes/os_keycodes.h"
+
+
 // Mod-tap keys
 #define A_CTL     LCTL_T(KC_A)
 #define S_ALT     LALT_T(KC_S)
@@ -39,21 +42,7 @@
 /* #define NUM_ENT   LT(NUM, KC_ENT) */
 
 enum custom_keycodes {
-  BBL_COPY = SAFE_RANGE,
-  BBL_CUT,
-  BBL_PASTE,
-  BBL_UNDO,
-  BBL_REDO,
-  BBL_LOCK,
-  BBL_SUSPEND,
-  BBL_POWER_DOWN,
-  BBL_SCREENSHOT,
-  BBL_MULTI_TASK_VIEW,
-  BBL_APP_WINDOWS,
-  BBL_DESKTOP_NEXT,
-  BBL_DESKTOP_PREV,
-  BBL_OS_SEARCH,
-  BBL_TERMINAL
+  NEXT_CUSTOM_KEYCODE = OS_KEYCODES_END_RANGE,
 };
 
 enum layers {
@@ -75,7 +64,7 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_planck_mit(
-    BBL_TERMINAL,  KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,    KC_Y,  KC_U,     KC_I,      KC_O,     KC_P,      KC_BSPACE,
+    OK_TERMINAL,  KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,    KC_Y,  KC_U,     KC_I,      KC_O,     KC_P,      KC_BSPACE,
     KC_ESC,   A_CTL,    S_ALT,    D_GUI,    F_SFT,    KC_G,    KC_H,  J_SFT,    K_GUI,     L_ALT,    NTIL_CTL,  ES_ACUT,
     KC_LSFT,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,    KC_N,  KC_M,     KC_COMMA,  KC_DOT,   ES_MINS,   KC_ENT,
     XXXXXXX,  XXXXXXX,  XXXXXXX,  MO(NUM),  NAV_TAB,  KC_SPC,         MO(SYM),  MO(FUNC),  XXXXXXX,  XXXXXXX,   XXXXXXX
@@ -91,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [NAV] = LAYOUT_planck_mit(
     XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
     XXXXXXX,  KC_LCTL,  KC_LALT,  KC_LGUI,  KC_LSFT,  XXXXXXX,  KC_LEFT,  KC_DOWN,    KC_UP,    KC_RIGHT,  XXXXXXX,  XXXXXXX,
-    XXXXXXX,  BBL_UNDO, BBL_CUT,  BBL_COPY, BBL_PASTE,    BBL_REDO,    KC_HOME,  KC_PGDOWN,  KC_PGUP,  KC_END,    XXXXXXX,  XXXXXXX,
+    XXXXXXX,  OK_UNDO, OK_CUT,  OK_COPY, OK_PASTE,    OK_REDO,    KC_HOME,  KC_PGDOWN,  KC_PGUP,  KC_END,    XXXXXXX,  XXXXXXX,
     XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_SPC,             XXXXXXX,    XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX
   ),
 
@@ -117,90 +106,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [FUNC] = LAYOUT_planck_mit(
-    XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,  XXXXXXX,  XXXXXXX,     BBL_OS_SEARCH,           XXXXXXX,  BBL_LOCK,     XXXXXXX,
-    XXXXXXX,  KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,  BBL_DESKTOP_PREV,  BBL_APP_WINDOWS,    BBL_MULTI_TASK_VIEW,  BBL_DESKTOP_NEXT,  BBL_SUSPEND,      XXXXXXX,
-    KC_LSFT,  KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,  XXXXXXX,  BBL_SCREENSHOT,  XXXXXXX,          XXXXXXX,  BBL_POWER_DOWN,      XXXXXXX,
+    XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,  XXXXXXX,  XXXXXXX,     OK_OS_SEARCH,           XXXXXXX,  OK_LOCK,     XXXXXXX,
+    XXXXXXX,  KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,  OK_DESKTOP_PREV,  OK_APP_WINDOWS,    OK_MULTI_TASK_VIEW,  OK_DESKTOP_NEXT,  OK_SUSPEND,      XXXXXXX,
+    KC_LSFT,  KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,  XXXXXXX,  OK_SCREENSHOT,  XXXXXXX,          XXXXXXX,  OK_POWER_DOWN,      XXXXXXX,
     KC_LCTL,  KC_LGUI,  KC_LALT,  XXXXXXX,  XXXXXXX,  XXXXXXX,            XXXXXXX,     _______,          XXXXXXX,  XXXXXXX,      XXXXXXX
   ),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case BBL_UNDO:
-      if (record->event.pressed) {
-        SEND_STRING(SS_LCTL("z"));
-        return true;
-      }
-    case BBL_CUT:
-      if (record->event.pressed) {
-        SEND_STRING(SS_LCTL("x"));
-        return false;
-      }
-    case BBL_COPY:
-      if (record->event.pressed) {
-        SEND_STRING(SS_LCTL("c"));
-        return true;
-      }
-    case BBL_PASTE:
-      if (record->event.pressed) {
-        SEND_STRING(SS_LCTL("v"));
-        return true;
-      }
-    case BBL_REDO:
-      if (record->event.pressed) {
-        SEND_STRING(SS_LCTL("y"));
-        return true;
-      }
-    case BBL_LOCK:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_L) SS_UP(X_LALT) SS_UP(X_LCTRL));
-        return true;
-      }
-    case BBL_SUSPEND:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_SLEP) SS_UP(X_SLEP));
-        return true;
-      }
-    case BBL_POWER_DOWN:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_PWR) SS_UP(X_PWR));
-        return true;
-      }
-    case BBL_SCREENSHOT:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LGUI) SS_DOWN(X_LSFT) SS_TAP(X_PSCR) SS_UP(X_LSFT) SS_UP(X_LGUI));
-        return true;
-      }
-    case BBL_MULTI_TASK_VIEW:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LCTRL) SS_TAP(X_F9) SS_UP(X_LCTRL));
-        return true;
-      }
-    case BBL_APP_WINDOWS:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LCTRL) SS_TAP(X_F7) SS_UP(X_LCTRL));
-        return true;
-      }
-    case BBL_DESKTOP_PREV:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LCTRL) SS_DOWN(X_LGUI) SS_TAP(X_LEFT) SS_UP(X_LGUI) SS_UP(X_LCTRL));
-        return true;
-      }
-    case BBL_DESKTOP_NEXT:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LCTRL) SS_DOWN(X_LGUI) SS_TAP(X_RIGHT) SS_UP(X_LGUI) SS_UP(X_LCTRL));
-        return true;
-      }
-    case BBL_OS_SEARCH:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LGUI) SS_TAP(X_SPC) SS_UP(X_LGUI));
-        return true;
-      }
-    case BBL_TERMINAL:
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_SPC) SS_UP(X_LALT) SS_UP(X_LCTRL));
-        return true;
-      }
+  bool isOsKeycodeProcessed = ok_process_record_user(keycode, record);
+
+  if (isOsKeycodeProcessed) {
+    return false;
   }
 
   return true;

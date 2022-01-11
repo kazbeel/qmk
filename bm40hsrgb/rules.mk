@@ -1,3 +1,5 @@
+SRC += os_keycodes/os_keycodes.c
+
 BOOTMAGIC_ENABLE = lite
 MOUSEKEY_ENABLE = no
 EXTRAKEY_ENABLE = yes
