@@ -11,6 +11,12 @@
 #		define OS_KEYCODES_START_RANGE SAFE_RANGE
 #endif
 
+enum os_modes {
+  OS_KEYCODES_LINUX_MODE,
+	OS_KEYCODES_WINDOWS_MODE,
+	OS_KEYCODES_IOS_MODE
+};
+
 enum os_keycodes {
 	OS_KEYCODES_FIRST = OS_KEYCODES_START_RANGE,
   OS_KEYCODES_COPY,
@@ -28,6 +34,8 @@ enum os_keycodes {
   OK_KEYCODES_DESKTOP_PREV,
   OK_KEYCODES_OS_SEARCH,
   OK_KEYCODES_TERMINAL,
+
+	OK_KEYCODES_SET_MODE_LINUX,
 
 	OS_KEYCODES_END_RANGE
 };
@@ -48,4 +56,9 @@ enum os_keycodes {
 #define OK_OS_SEARCH OK_KEYCODES_OS_SEARCH
 #define OK_TERMINAL OK_KEYCODES_TERMINAL
 
+#define OK_SET_LINUX_MODE OK_KEYCODES_SET_MODE_LINUX
+
+void set_os_mode(uint8_t mode);
 bool ok_process_record_user(uint16_t keycode, keyrecord_t *record);
+
+bool ok_process_keycode_linux(uint16_t keycode);
