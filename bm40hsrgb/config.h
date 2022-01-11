@@ -3,12 +3,9 @@
 #define MASTER_LEFT
 
 #define TAPPING_TERM 150
-#define TAPPING_TERM_PER_KEY
 
 #define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
-
-#define RETRO_TAPPING_PER_KEY
 
 #ifdef RGB_MATRIX_ENABLE
 // #  define RGB_DISABLE_WHEN_USB_SUSPENDED false // turn off effects when suspended
