@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  qmk:
+    container_name: qmk
+    image: qmkfm/qmk_firmware:latest
+    volumes:
+      - ./crkbd:/qmk_firmware/keyboards/crkbd/keymaps/kazbeel
+      - ./bm40hsrgb:/qmk_firmware/keyboards/bm40hsrgb/keymaps/kazbeel
+      - /dev/bus/usb:/dev/bus/usb
+    privileged: true
+    command: bash
+    stdin_open: true
+    tty: true
+
