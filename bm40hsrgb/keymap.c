@@ -123,6 +123,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch(keycode) {
+    case S_ALT:
+    case D_GUI:
+    case K_GUI:
+    case L_ALT:
+      return -1;
+    case A_CTL:
+    case F_SFT:
+    case J_SFT:
+    case NTIL_CTL:
+      return TAPPING_TERM + 150;
+    default:
+      return TAPPING_TERM;
+  }
+}
+
 uint32_t layer_state_set_user(uint32_t state) {
   uint8_t layer = biton32(state);
 
