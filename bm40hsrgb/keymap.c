@@ -144,11 +144,31 @@ uint32_t layer_state_set_user(uint32_t state) {
   uint8_t layer = biton32(state);
 
   if (layer == GAMING) {
-    rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
   } else {
-    rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
   }
 
   return state;
 }
 
+void rgb_matrix_indicators_kb(void) {
+  uint8_t current_os_mode = get_os_mode();
+
+  switch (current_os_mode) {
+    case OS_KEYCODES_LINUX_MODE:
+      rgb_matrix_set_color(41, RGB_ORANGE);
+    break;
+
+    case OS_KEYCODES_WINDOWS_MODE:
+      rgb_matrix_set_color(41, RGB_BLUE);
+    break;
+
+    case OS_KEYCODES_MAC_MODE:
+      rgb_matrix_set_color(41, RGB_WHITE);
+    break;
+
+    default:
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
+  }
+}

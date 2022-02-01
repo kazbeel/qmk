@@ -22,6 +22,10 @@ void set_os_mode(uint8_t mode) {
 	os_mode = mode;
 }
 
+uint8_t get_os_mode(void) {
+	return os_mode;
+}
+
 // returns whether the keycode has been processed (true) or not (false)
 static bool ok_process_keycode(uint16_t keycode) {
 	if (keycode == OK_KEYCODES_SET_MODE_LINUX) {
