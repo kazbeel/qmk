@@ -14,7 +14,8 @@
 enum ok_modes {
   OK_KEYCODES_LINUX_MODE,
 	OK_KEYCODES_WINDOWS_MODE,
-	OK_KEYCODES_MAC_MODE
+	OK_KEYCODES_MAC_MODE,
+  OK_KEYCODES_MAX
 };
 
 enum ok_keycodes {
@@ -38,6 +39,7 @@ enum ok_keycodes {
 	OK_KEYCODES_SET_MODE_LINUX,
 	OK_KEYCODES_SET_MODE_WINDOWS,
 	OK_KEYCODES_SET_MODE_MAC,
+  OK_KEYCODES_SHIFT_OS_MODE,
 
 	OK_KEYCODES_END_RANGE
 };
@@ -61,9 +63,11 @@ enum ok_keycodes {
 #define OK_SET_LINUX_MODE OK_KEYCODES_SET_MODE_LINUX
 #define OK_SET_WINDOWS_MODE OK_KEYCODES_SET_MODE_WINDOWS
 #define OK_SET_MAC_MODE OK_KEYCODES_SET_MODE_MAC
+#define OK_SHIFT_OS_MODE OK_KEYCODES_SHIFT_OS_MODE
 
 void set_os_mode(uint8_t mode);
 uint8_t get_os_mode(void);
+void shift_os_mode(void);
 
 bool ok_process_record_user(uint16_t keycode, keyrecord_t *record);
 

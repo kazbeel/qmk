@@ -22,6 +22,10 @@ void set_os_mode(uint8_t mode) {
 	os_mode = mode;
 }
 
+void shift_os_mode(void) {
+	os_mode = (os_mode + 1) % OK_KEYCODES_MAX;
+}
+
 uint8_t get_os_mode(void) {
 	return os_mode;
 }
@@ -40,6 +44,11 @@ static bool ok_process_keycode(uint16_t keycode) {
 
 	if (keycode == OK_KEYCODES_SET_MODE_MAC) {
 		set_os_mode(OK_KEYCODES_MAC_MODE);
+		return true;
+	}
+
+	if (keycode == OK_KEYCODES_SHIFT_OS_MODE) {
+		shift_os_mode();
 		return true;
 	}
 
