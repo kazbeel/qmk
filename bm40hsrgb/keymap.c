@@ -16,33 +16,11 @@
 #define L_ALT     LALT_T(KC_L)
 #define NTIL_CTL  LCTL_T(ES_NTIL)
 
-// #ifdef OS_MAC
-
-// // Edit commands
-// #define U_UND   LGUI(KC_Z)
-// #define U_RDO   SGUI(KC_Z)
-// #define U_CUT   LGUI(KC_X)
-// #define U_CPY   LGUI(KC_C)
-// #define U_PST   LGUI(KC_V)
-
-// // Control
-// #define LOCK_SCREEN       LCTL(LGUI(KC_Q))      // Lock current user session
-// #define SUSPEND           LALT(LGUI(KC_POWER))  // Suspend computer
-// #define SCREENSHOT        LSFT(LGUI(KC_5))      // Open screenshot app
-// #define MISSION_CONTROL   LCTL(KC_UP)           // Open Mission Control
-// #define APP_WINS          LCTL(KC_DOWN)         // Show application windows
-// #define PRV_DSK           LCTL(KC_LEFT)         // Show previous desktop
-// #define NXT_DSK           LCTL(KC_RIGHT)        // Show next desktop
-// #define SEARCH            LGUI(KC_SPC)          // Show Spotlight
-
-// #endif // OS_MAC
-
 // Multifunction layer toggle and simple keycode
 #define NAV_TAB   LT(NAV, KC_TAB)
-/* #define NUM_ENT   LT(NUM, KC_ENT) */
 
 enum custom_keycodes {
-  NEXT_CUSTOM_KEYCODE = OS_KEYCODES_END_RANGE,
+  NEXT_CUSTOM_KEYCODE = OK_KEYCODES_END_RANGE,
 };
 
 enum layers {
@@ -99,10 +77,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [MEDIA] = LAYOUT_planck_mit(
-    RESET,    XXXXXXX,            RGB_TOG,  RGB_MOD,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  TG(GAMING),  XXXXXXX,
-    XXXXXXX,  OK_SET_LINUX_MODE,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MPRV,  KC_MPLY,  KC_MNXT,  XXXXXXX,     XXXXXXX,
-    XXXXXXX,  XXXXXXX,            XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_VOLD,  KC_MUTE,  KC_VOLU,  XXXXXXX,     XXXXXXX,
-    XXXXXXX,  XXXXXXX,            XXXXXXX,  XXXXXXX,  _______,  XXXXXXX,            _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,     XXXXXXX
+    RESET,    XXXXXXX,            RGB_TOG,              RGB_MOD,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  TG(GAMING),  XXXXXXX,
+    XXXXXXX,  OK_SET_LINUX_MODE,  OK_SET_WINDOWS_MODE,  OK_SET_MAC_MODE,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MPRV,  KC_MPLY,  KC_MNXT,  XXXXXXX,     XXXXXXX,
+    XXXXXXX,  XXXXXXX,            XXXXXXX,              XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_VOLD,  KC_MUTE,  KC_VOLU,  XXXXXXX,     XXXXXXX,
+    XXXXXXX,  XXXXXXX,            XXXXXXX,              XXXXXXX,          _______,  XXXXXXX,            _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,     XXXXXXX
   ),
 
   [FUNC] = LAYOUT_planck_mit(
@@ -156,15 +134,15 @@ void rgb_matrix_indicators_kb(void) {
   uint8_t current_os_mode = get_os_mode();
 
   switch (current_os_mode) {
-    case OS_KEYCODES_LINUX_MODE:
+    case OK_KEYCODES_LINUX_MODE:
       rgb_matrix_set_color(41, RGB_ORANGE);
     break;
 
-    case OS_KEYCODES_WINDOWS_MODE:
+    case OK_KEYCODES_WINDOWS_MODE:
       rgb_matrix_set_color(41, RGB_BLUE);
     break;
 
-    case OS_KEYCODES_MAC_MODE:
+    case OK_KEYCODES_MAC_MODE:
       rgb_matrix_set_color(41, RGB_WHITE);
     break;
 

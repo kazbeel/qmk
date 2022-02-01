@@ -4,23 +4,23 @@
 
 
 #if defined(NEW_SAFE_RANGE)
-#		define OS_KEYCODES_START_RANGE NEW_SAFE_RANGE
+#		define OK_KEYCODES_START_RANGE NEW_SAFE_RANGE
 #elif defined(KEYMAP_SAFE_RANGE)
-#		define OS_KEYCODES_START_RANGE KEYMAP_SAFE_RANGE
+#		define OK_KEYCODES_START_RANGE KEYMAP_SAFE_RANGE
 #else
-#		define OS_KEYCODES_START_RANGE SAFE_RANGE
+#		define OK_KEYCODES_START_RANGE SAFE_RANGE
 #endif
 
-enum os_modes {
-  OS_KEYCODES_LINUX_MODE,
-	OS_KEYCODES_WINDOWS_MODE,
-	OS_KEYCODES_MAC_MODE
+enum ok_modes {
+  OK_KEYCODES_LINUX_MODE,
+	OK_KEYCODES_WINDOWS_MODE,
+	OK_KEYCODES_MAC_MODE
 };
 
-enum os_keycodes {
-	OS_KEYCODES_FIRST = OS_KEYCODES_START_RANGE,
-  OS_KEYCODES_COPY,
-  OS_KEYCODES_CUT,
+enum ok_keycodes {
+	OK_KEYCODES_FIRST = OK_KEYCODES_START_RANGE,
+  OK_KEYCODES_COPY,
+  OK_KEYCODES_CUT,
   OK_KEYCODES_PASTE,
   OK_KEYCODES_UNDO,
   OK_KEYCODES_REDO,
@@ -36,12 +36,14 @@ enum os_keycodes {
   OK_KEYCODES_TERMINAL,
 
 	OK_KEYCODES_SET_MODE_LINUX,
+	OK_KEYCODES_SET_MODE_WINDOWS,
+	OK_KEYCODES_SET_MODE_MAC,
 
-	OS_KEYCODES_END_RANGE
+	OK_KEYCODES_END_RANGE
 };
 
-#define OK_COPY OS_KEYCODES_COPY
-#define OK_CUT OS_KEYCODES_CUT
+#define OK_COPY OK_KEYCODES_COPY
+#define OK_CUT OK_KEYCODES_CUT
 #define OK_PASTE OK_KEYCODES_PASTE
 #define OK_UNDO OK_KEYCODES_UNDO
 #define OK_REDO OK_KEYCODES_REDO
@@ -57,6 +59,8 @@ enum os_keycodes {
 #define OK_TERMINAL OK_KEYCODES_TERMINAL
 
 #define OK_SET_LINUX_MODE OK_KEYCODES_SET_MODE_LINUX
+#define OK_SET_WINDOWS_MODE OK_KEYCODES_SET_MODE_WINDOWS
+#define OK_SET_MAC_MODE OK_KEYCODES_SET_MODE_MAC
 
 void set_os_mode(uint8_t mode);
 uint8_t get_os_mode(void);
@@ -64,3 +68,5 @@ uint8_t get_os_mode(void);
 bool ok_process_record_user(uint16_t keycode, keyrecord_t *record);
 
 bool ok_process_keycode_linux(uint16_t keycode);
+bool ok_process_keycode_windows(uint16_t keycode);
+bool ok_process_keycode_mac(uint16_t keycode);

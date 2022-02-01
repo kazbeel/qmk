@@ -1,4 +1,4 @@
-SRC += os_keycodes/os_keycodes.c os_keycodes/ok_linux.c
+SRC += os_keycodes/os_keycodes.c os_keycodes/ok_linux.c os_keycodes/ok_windows.c os_keycodes/ok_mac.c
 
 BOOTMAGIC_ENABLE = lite
 MOUSEKEY_ENABLE = no

@@ -1,6 +1,6 @@
 #include "os_keycodes.h"
 
-bool ok_process_keycode_linux(uint16_t keycode) {
+bool ok_process_keycode_windows(uint16_t keycode) {
 	if (keycode == OK_KEYCODES_COPY) {
     SEND_STRING(SS_LCTL("c"));
 	} else if (keycode == OK_KEYCODES_CUT) {
