@@ -19,6 +19,9 @@
 // Multifunction layer toggle and simple keycode
 #define NAV_TAB   LT(NAV, KC_TAB)
 
+static uint8_t current_os_mode = OK_KEYCODES_LINUX_MODE;
+// static uint16_t rgb_os_mode_timer = 0;
+
 enum custom_keycodes {
   NEXT_CUSTOM_KEYCODE = OK_KEYCODES_END_RANGE,
 };
@@ -77,10 +80,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [MEDIA] = LAYOUT_planck_mit(
-    RESET,    XXXXXXX,            RGB_TOG,              RGB_MOD,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  TG(GAMING),  XXXXXXX,
-    XXXXXXX,  OK_SET_LINUX_MODE,  OK_SET_WINDOWS_MODE,  OK_SET_MAC_MODE,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MPRV,  KC_MPLY,  KC_MNXT,  XXXXXXX,     XXXXXXX,
-    XXXXXXX,  OK_SHIFT_OS_MODE,   XXXXXXX,              XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_VOLD,  KC_MUTE,  KC_VOLU,  XXXXXXX,     XXXXXXX,
-    XXXXXXX,  XXXXXXX,            XXXXXXX,              XXXXXXX,          _______,  XXXXXXX,            _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,     XXXXXXX
+    RESET,    XXXXXXX,           RGB_TOG,  RGB_MOD,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  TG(GAMING),  XXXXXXX,
+    XXXXXXX,  OK_SHIFT_OS_MODE,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MPRV,  KC_MPLY,  KC_MNXT,  XXXXXXX,     XXXXXXX,
+    XXXXXXX,  XXXXXXX,           XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_VOLD,  KC_MUTE,  KC_VOLU,  XXXXXXX,     XXXXXXX,
+    XXXXXXX,  XXXXXXX,           XXXXXXX,  XXXXXXX,  _______,  XXXXXXX,            _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,     XXXXXXX
   ),
 
   [FUNC] = LAYOUT_planck_mit(
@@ -118,6 +121,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
+void matrix_scan_user(void) {
+  // Turn off LED 1.5s after changing of OS mode
+  // if (timer_elapsed(rgb_os_mode_timer) > 1500) {
+  //   rgb_matrix_set_color(41, RGB_OFF);
+  //   // rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
+  //   rgb_os_mode_timer = 0;
+  // }
+}
+
 uint32_t layer_state_set_user(uint32_t state) {
   uint8_t layer = biton32(state);
 
@@ -130,23 +142,34 @@ uint32_t layer_state_set_user(uint32_t state) {
   return state;
 }
 
-void rgb_matrix_indicators_kb(void) {
-  uint8_t current_os_mode = get_os_mode();
 
-  switch (current_os_mode) {
-    case OK_KEYCODES_LINUX_MODE:
-      rgb_matrix_set_color(41, RGB_ORANGE);
-    break;
+void rgb_matrix_indicators_user(void) {
+  uint8_t cur_mode = get_os_mode();
 
-    case OK_KEYCODES_WINDOWS_MODE:
-      rgb_matrix_set_color(41, RGB_BLUE);
-    break;
-
-    case OK_KEYCODES_MAC_MODE:
-      rgb_matrix_set_color(41, RGB_WHITE);
-    break;
-
-    default:
-      rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
+  if (current_os_mode != cur_mode) {
+    current_os_mode = cur_mode;
+  //   rgb_os_mode_timer = timer_read();
   }
+
+  // switch (cur_mode) {
+  //   case OK_KEYCODES_LINUX_MODE:
+  //     rgb_matrix_set_color(41, RGB_ORANGE);
+  //   break;
+
+  //   case OK_KEYCODES_WINDOWS_MODE:
+  //     rgb_matrix_set_color(41, RGB_BLUE);
+  //   break;
+
+  //   case OK_KEYCODES_MAC_MODE:
+  //     rgb_matrix_set_color(41, RGB_WHITE);
+  //   break;
+  // }
+}
+
+void keyboard_post_init_user(void) {
+  // Customise these values to desired behaviour
+  debug_enable=true;
+  debug_matrix=true;
+  //debug_keyboard=true;
+  //debug_mouse=true;
 }

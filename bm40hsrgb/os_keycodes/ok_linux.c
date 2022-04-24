@@ -18,7 +18,7 @@ bool ok_process_keycode_linux(uint16_t keycode) {
 	} else if (keycode == OK_KEYCODES_POWER_DOWN) {
 		SEND_STRING(SS_DOWN(X_PWR) SS_UP(X_PWR));
 	} else if (keycode == OK_KEYCODES_SCREENSHOT) {
-		SEND_STRING(SS_DOWN(X_LGUI) SS_DOWN(X_LSFT) SS_TAP(X_PSCR) SS_UP(X_LSFT) SS_UP(X_LGUI));
+		SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_PSCR) SS_UP(X_LSFT)s);
 	} else if (keycode == OK_KEYCODES_MULTI_TASK_VIEW) {
 		SEND_STRING(SS_DOWN(X_LCTRL) SS_TAP(X_F9) SS_UP(X_LCTRL));
 	} else if (keycode == OK_KEYCODES_APP_WINDOWS) {

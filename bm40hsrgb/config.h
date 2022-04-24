@@ -9,8 +9,8 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 
 #ifdef RGB_MATRIX_ENABLE
-// #  define RGB_DISABLE_WHEN_USB_SUSPENDED false // turn off effects when suspended
-#  define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120    // limits maximum brightness of LEDs to 200 out of 255. If not defined maximum brightness is set to 255
+#  define RGB_DISABLE_WHEN_USB_SUSPENDED true   // turn off effects when suspended
+#  define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120     // limits maximum brightness of LEDs to 200 out of 255. If not defined maximum brightness is set to 255
 #  define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_TYPING_HEATMAP
 
 #  define RGB_MATRIX_FRAMEBUFFER_EFFECTS      // For the heatmap effect
@@ -30,7 +30,7 @@
 #  define DISABLE_RGB_MATRIX_CYCLE_ALL               // Full keyboard solid hue cycling through full gradient
 #  define DISABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT        // Full gradient scrolling left to right
 #  define DISABLE_RGB_MATRIX_CYCLE_UP_DOWN           // Full gradient scrolling top to bottom
-#  define DISABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON  // Full gradent Chevron shapped scrolling left to right
+#  define DISABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON  // Full gradient Chevron shaped scrolling left to right
 #  define DISABLE_RGB_MATRIX_CYCLE_OUT_IN            // Full gradient scrolling out to in
 #  define DISABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL       // Full dual gradients scrolling out to in
 #  define DISABLE_RGB_MATRIX_CYCLE_PINWHEEL          // Full gradient spinning pinwheel around center of keyboard
@@ -64,13 +64,6 @@
 #    define DISABLE_RGB_MATRIX_SOLID_MULTISPLASH         // Hue & value pulse away from multiple key hits then fades value out
 #  endif // RGB_MATRIX_KEYPRESSES
 #endif // RGB_MATRIX_ENABLE
-
-/**
- * OLED configuration.
- */
-// #define OLED_TIMEOUT 30000
-// #define OLED_BRIGHTNESS 128
-// #define OLED_UPDATE_INTERVAL 5
 
 /**
  * Disable unused features to save ROM space
